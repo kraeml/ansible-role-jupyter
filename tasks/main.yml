@@ -1,0 +1,150 @@
+---
+# tasks file for jupyter
+
+- name: Install jupyter dependencies
+  become: yes
+  package:
+      state: present
+      name: "{{dependencies_packages}}"
+
+- name: Pip3 Version
+  command: pip3 --version
+  register: pip3_version
+  ignore_errors: yes
+  changed_when: False
+
+- name: Ensure pip3 is installed
+  become: yes
+  package:
+    state: present
+    name: python3-pip
+  when: pip3_version|failed
+
+- name: Ensure Jupyter and some kernel/extensions are installed
+  become: yes
+  pip:
+    name: "{{item}}"
+    executable: pip3
+    state: present
+  with_items: "{{pip3_packages}}"
+
+- name: Stat of jupyter_c_kernel resources
+  stat:
+    path: /usr/local/lib/python3.5/dist-packages/jupyter_c_kernel/resources/
+  register: p
+
+- name: Ensure jupyter_c_kernel is installed via pip url
+  become: yes
+  pip:
+    name: "{{item}}"
+    executable: pip3
+    state: forcereinstall
+  with_items:
+    - https://raw.githubusercontent.com/kraeml/jupyter-c-kernel/master/dist/jupyter_c_kernel-1.2.8.tar.gz
+  when: p.stat.exists == False
+
+- name: Ensure jupyter_c_kernel is installed
+  become: yes
+  command: /usr/local/bin/install_c_kernel --sys-prefix
+  args:
+    creates: /usr/share/jupyter/kernels/c/kernel.json
+
+- name: Ensure bash kernel is installed
+  become: yes
+  command: python3 -m bash_kernel.install
+  args:
+    creates: /usr/local/share/jupyter/kernels/bash
+
+- name: Ensure ijavascript is installed
+  become: yes
+  become_method: sudo
+  become_flags: "-H"
+  npm:
+      name: ijavascript
+      global: yes
+      state: present # The state of the node.js library
+
+- name: Ensure ijavascript kernel is installed
+  become: yes
+  command: /usr/bin/ijsinstall --install=global
+  args:
+    creates: /usr/local/share/jupyter/kernels/javascript
+
+- name: Ensure RISE installed
+  become: yes
+  command: jupyter-nbextension install rise --py --sys-prefix
+  args:
+    creates: /usr/local/share/jupyter/nbextensions/rise/
+  register: jupyter_rise
+
+- name: Ensure RISE enabled
+  become: yes
+  command: jupyter-nbextension enable rise --py --sys-prefix
+  when: jupyter_rise.changed
+
+- name: Get nbextensions
+  command: jupyter nbextension list
+  register: jupyter_nbextensions
+  changed_when: False
+
+- name: Display nbextension
+  debug:
+      var: jupyter_nbextensions
+      verbosity: 2
+
+- name: Ensure widgetsnbextension activated
+  become: yes
+  command: jupyter nbextension enable --py --sys-prefix widgetsnbextension
+  # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
+
+- name: Ensure notebook directory exists
+  file:
+      path: "{{ansible_user_dir}}/{{item}}"
+      state: directory
+      owner: "{{ansible_user_id}}"
+      group: "{{ansible_user_id}}"
+  with_items:
+      - notebooks
+      - .jupyter
+
+- name: Ensure link to rdf-edu-notbooks exitst
+  become: yes
+  become: "{{ansible_user_id}}"
+  file:
+    src: "{{ansible_user_dir}}/.raspberry-edu-devops/notebooks"
+    dest: "{{ansible_user_dir}}/notebooks/raspberry-edu-devops"
+    state: link
+
+- name: Create jupyter config
+  template:
+      src: jupyter_notebook_config.py.j2
+      dest: "{{ansible_user_dir}}/.jupyter/jupyter_notebook_config.py"
+      owner: "{{ansible_user_id}}"
+      group: "{{ansible_user_id}}"
+  notify:
+    - restart_jupyter
+
+- name: copies the nbextensions’ javascript and css files
+  become: yes
+  become_user: "{{ansible_user_id}}"
+  command: jupyter contrib nbextension install --user
+
+- name: Enable nbextensions
+  become: yes
+  become_user: "{{ansible_user_id}}"
+  command: jupyter nbextensions_configurator enable --user
+
+- name: Enable ipyleaflet
+  become: yes
+  command: jupyter nbextension enable --py --sys-prefix ipyleaflet
+
+- name: Enable and start Jupyter as service
+  become: yes
+  template:
+      src: jupyter.service.j2
+      dest: /lib/systemd/system/jupyter.service
+      mode: 0644
+      owner: root
+      group: root
+  notify:
+    - restart_jupyter

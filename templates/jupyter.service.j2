@@ -1,0 +1,19 @@
+[Unit]
+Description=Jupyter Notebook
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/jupyter-notebook
+Restart=on-failure
+Nice=5
+User={{ansible_user_id}}
+Group={{ansible_user_id}}
+Environment=PATH=/usr/bin:/usr/local/bin:/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/home/{{ansible_user_id}}/
+# Tag things in the log
+SyslogIdentifier=Jupyter-Notebook
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,41 @@
+---
+# defaults file for jupyter
+dependencies_packages:
+    - libncurses5-dev
+    - python-dev
+    - pandoc
+    - cmake
+    - llvm
+    - llvm-dev
+    - clang
+    - git
+    - g++
+    - debhelper
+    - devscripts
+    - gnupg
+    - python
+    - libxslt1.1
+
+pip3_packages:
+    - jupyter
+    - readline
+    - ipyparallel
+    - bash_kernel
+    - ipython-sql
+    - ihtml
+    - ExpectException
+    - RISE
+    - jupyter_contrib_nbextensions
+    - ipyleaflet
+
+nodejs_version: "6.x"
+nodejs_npm_global_packages:
+    - ijavascript
+
+NotebookApp:
+    open_browser: "False"
+    ip: "*"
+    port: 8888
+    enable_mathjax: "True"
+    notebook_dir: "{{ansible_user_dir}}/notebooks"
+    password: "sha1:5815fb7ca805:f09ed218dfcc908acb3e29c3b697079fea37486a"
