@@ -20,6 +20,10 @@
     name: python3-pip
   when: pip3_version|failed
 
+- name: Ensure outdated python packages are updated
+  become: yes
+  command: pip3 install -U $(pip3 freeze | awk '{split($0, a, "=="); print a[1]}')
+
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
   pip:
