@@ -20,9 +20,15 @@
     name: python3-pip
   when: pip3_version|failed
 
-- name: Ensure outdated python packages are updated
+- name: Ensure lates pip is installed
   become: yes
-  shell: pip3 install -U $(pip3 freeze | awk '{split($0, a, "=="); print a[1]}')
+  become_method: sudo
+  become_flags: "-H"
+  command: pip3 install --ignore-installed pip
+
+- name: Ensure outdated python packages are updated
+  shell: pip3 list --outdated --format=legacy | grep -v ansible | cut -d' ' -f1 | xargs sudo pip3 install --upgrade
+  changed_when: False
 
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
