@@ -43,7 +43,7 @@ dependencies_packages:
     #- liblcms1-dev
     #- liblcms1
     - liblcms2-dev
-    - liblcms2
+    - liblcms2-2
     - zlib1g
     - libjpeg8
     - libjpeg-dev
