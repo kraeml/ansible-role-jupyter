@@ -117,13 +117,13 @@
       - notebooks
       - .jupyter
 
-- name: Ensure link to rdf-edu-notbooks exitst
-  become: yes
-  become: "{{ansible_user_id}}"
-  file:
-    src: "{{ansible_user_dir}}/.raspberry-edu-devops/notebooks"
-    dest: "{{ansible_user_dir}}/notebooks/raspberry-edu-devops"
-    state: link
+#- name: Ensure link to rdf-edu-notbooks exitst
+#  become: yes
+#  become: "{{ansible_user_id}}"
+#  file:
+#    src: "{{ansible_user_dir}}/.raspberry-edu-devops/notebooks"
+#    dest: "{{ansible_user_dir}}/notebooks/raspberry-edu-devops"
+#    state: link
 
 - name: Create jupyter config
   template:
