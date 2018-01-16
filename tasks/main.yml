@@ -27,7 +27,7 @@
   command: pip3 install --ignore-installed pip
 
 - name: Ensure outdated python packages are updated
-  shell: pip3 list --outdated --format=legacy | grep -v ansible | cut -d' ' -f1 | xargs sudo pip3 install --upgrade
+  shell: pip3 list --outdated --format=legacy | grep -v ansible | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
 
 - name: Ensure Jupyter and some kernel/extensions are installed
@@ -40,7 +40,7 @@
 
 - name: Stat of jupyter_c_kernel resources
   stat:
-    path: /usr/local/lib/python3.5/dist-packages/jupyter_c_kernel/resources/
+    path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
   register: p
 
 - name: Ensure jupyter_c_kernel is installed via pip url
