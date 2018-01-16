@@ -36,10 +36,14 @@ dependencies_packages:
     - libjpeg-dev
     - libpango1.0-dev
     - libgif-dev
+    # Not in ubuntu1604
     #- libjpeg62-turbo
     #- libjpeg62-turbo-dev
-    - liblcms1-dev
-    - liblcms1
+    # Not in Uubntu 1604
+    #- liblcms1-dev
+    #- liblcms1
+    - liblcms2-dev
+    - liblcms2
     - zlib1g
     - libjpeg8
     - libjpeg-dev
