@@ -117,14 +117,6 @@
       - notebooks
       - .jupyter
 
-#- name: Ensure link to rdf-edu-notbooks exitst
-#  become: yes
-#  become: "{{ansible_user_id}}"
-#  file:
-#    src: "{{ansible_user_dir}}/.raspberry-edu-devops/notebooks"
-#    dest: "{{ansible_user_dir}}/notebooks/raspberry-edu-devops"
-#    state: link
-
 - name: Create jupyter config
   template:
       src: jupyter_notebook_config.py.j2
@@ -144,9 +136,9 @@
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
 
-- name: Enable ipyleaflet
-  become: yes
-  command: jupyter nbextension enable --py --sys-prefix ipyleaflet
+#- name: Enable ipyleaflet
+#  become: yes
+#  command: jupyter nbextension enable --py --sys-prefix ipyleaflet
 
 - name: Enable and start Jupyter as service
   become: yes
