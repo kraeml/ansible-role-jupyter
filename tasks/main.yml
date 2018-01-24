@@ -30,6 +30,30 @@
   shell: pip3 list --outdated --format=legacy | grep -v ansible | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
 
+- name: Ensure czmq is installed
+  stat:
+      path:  /usr/local/share/zproject/czmq/
+  register: czmq
+  ignore_errors: yes
+  changed_when: False
+
+- name: Git repro for iruby dependencies
+  git:
+      dest: /tmp/czmq
+      # Absolute path of where the repository should be checked out to.
+      # This parameter is required, unless C(clone) is set to C(no) This change
+      # was made in version 1.8.3. Prior to this version, the C(dest) parameter
+      # was always required.
+      repo: https://github.com/zeromq/czmq
+      # git, SSH, or HTTP(S) protocol address of the git repository.
+  when: czmq|failed
+
+- name: Install czmq
+  shell: ./autogen.sh && ./configure && sudo make && sudo make install
+  args:
+    chdir: /tmp/czmq
+  when: czmq|failed
+
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
   pip:
@@ -38,6 +62,16 @@
     state: present
   with_items: "{{pip3_packages}}"
 
+- name: Install iruby
+  gem:
+      name: "{{item}}"
+  with_items:
+    - iruby
+    - cztop
+
+- name: Install iruby kernel
+  command: iruby register --force
+  
 - name: Stat of jupyter_c_kernel resources
   stat:
     path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
