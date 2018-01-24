@@ -63,15 +63,14 @@
   with_items: "{{pip3_packages}}"
 
 - name: Install iruby
+  become: yes
   gem:
       name: "{{item}}"
-  with_items:
-    - iruby
-    - cztop
+  with_items: "{{gem_packages}}"
 
 - name: Install iruby kernel
   command: iruby register --force
-  
+
 - name: Stat of jupyter_c_kernel resources
   stat:
     path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
