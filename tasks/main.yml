@@ -47,13 +47,13 @@
       # was always required.
       repo: https://github.com/zeromq/czmq
       # git, SSH, or HTTP(S) protocol address of the git repository.
-  when: czmq.stderr != ""
+  when: not czmq.exists
 
 - name: Install czmq
   shell: ./autogen.sh && ./configure && sudo make && sudo make install
   args:
     chdir: /tmp/czmq
-  when: czmq.stderr != ""
+  when: not czmq.exists
 
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
