@@ -45,6 +45,14 @@ dependencies_packages:
     - libfreetype6-dev
     - libgirepository1.0-dev
     - libcurl4-openssl-dev
+    - libtool
+    - libffi-dev
+    - ruby
+    - ruby-dev
+    - make
+    - libzmq-dev
+    - autoconf
+    - pkg-config
 
 pip3_packages:
     - jupyter
@@ -60,6 +68,8 @@ pip3_packages:
     - psutil
     - paho-mqtt
     - tweepy
+    - cztop
+    - iruby
 
 nodejs_version: "6.x"
 nodejs_npm_global_packages:
