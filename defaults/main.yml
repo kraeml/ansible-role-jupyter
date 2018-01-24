@@ -68,6 +68,8 @@ pip3_packages:
     - psutil
     - paho-mqtt
     - tweepy
+
+gem_packages:
     - cztop
     - iruby
 
