@@ -69,8 +69,8 @@
       name: "{{item}}"
   with_items: "{{gem_packages}}"
 
-- name: Install iruby kernel
-  command: /usr/local/bin/iruby register --force
+#- name: Install iruby kernel
+#  command: /usr/local/bin/iruby register --force
 
 - name: Stat of jupyter_c_kernel resources
   stat:
