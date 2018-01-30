@@ -3,7 +3,7 @@
 
 - name: Output "{{ansible_user_id}}"
   debug:
-    var: "{{ansible_user_id}}"
+    msg: "The ansible user is {{ansible_user_id}}"
 
 - name: Install jupyter dependencies
   become: yes
