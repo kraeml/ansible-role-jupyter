@@ -1,6 +1,10 @@
 ---
 # tasks file for jupyter
 
+- name: Output "{{ansible_user_id}}"
+  debug:
+    var: "{{ansible_user_id}}"
+
 - name: Install jupyter dependencies
   become: yes
   package:
@@ -152,6 +156,8 @@
       - .jupyter
 
 - name: Create jupyter config
+  become: yes
+  become_user: "{{ansible_user_id}}"
   template:
       src: jupyter_notebook_config.py.j2
       dest: "{{ansible_user_dir}}/.jupyter/jupyter_notebook_config.py"
