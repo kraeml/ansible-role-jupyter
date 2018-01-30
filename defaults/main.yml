@@ -53,6 +53,7 @@ dependencies_packages:
     - libzmq-dev
     - autoconf
     - pkg-config
+    - libkrb5-dev
 
 pip3_packages:
     - jupyter
