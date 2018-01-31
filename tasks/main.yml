@@ -70,14 +70,18 @@
 - name: Install iruby for {{ansible_user_id}}
   become: yes
   become_flags: "-H"
-  gem:
-      name: "{{item}}"
+  shell: "gem install {{item}}"
+  args:
+      executable: /bin/bash
+      creates: /usr/local/bin/iruby
   with_items: "{{gem_packages}}"
 
 - name: Install iruby kernel via {{ansible_user_id}}
   become: yes
   become_user: "{{ansible_user_id}}"
-  command: "/usr/local/bin/iruby register --force"
+  shell: "/usr/local/bin/iruby register --force"
+  args:
+      creates: "{{ansible_user_dir}}/.ipython/kernels/ruby/kernel.json"
   notify: restart_jupyter
 
 - name: Stat of jupyter_c_kernel resources
