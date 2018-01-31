@@ -103,7 +103,7 @@
   become: yes
   command: /usr/local/bin/install_c_kernel --sys-prefix
   args:
-    creates: /usr/share/jupyter/kernels/c/kernel.json
+    creates: /usr/share/jupyter/kernels/c
 
 - name: Ensure bash kernel is installed
   become: yes
