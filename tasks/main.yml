@@ -69,12 +69,16 @@
 
 - name: Install iruby
   become: yes
+  become_user: "{{ansible_user_id}}"
   gem:
       name: "{{item}}"
   with_items: "{{gem_packages}}"
 
-#- name: Install iruby kernel
-#  command: /usr/local/bin/iruby register --force
+- name: Install iruby kernel
+  become: yes
+  become_user: "{{ansible_user_id}}"
+  command: iruby register --force
+  notify: restart_jupyter
 
 - name: Stat of jupyter_c_kernel resources
   stat:
