@@ -67,17 +67,17 @@
     state: present
   with_items: "{{pip3_packages}}"
 
-- name: Install iruby
+- name: Install iruby for {{ansible_user_id}}
   become: yes
   become_user: "{{ansible_user_id}}"
   gem:
       name: "{{item}}"
   with_items: "{{gem_packages}}"
 
-- name: Install iruby kernel
+- name: Install iruby kernel via {{ansible_user_dir}}/iruby
   become: yes
   become_user: "{{ansible_user_id}}"
-  command: iruby register --force
+  command: "{{ansible_user_dir}}/iruby register --force"
   notify: restart_jupyter
 
 - name: Stat of jupyter_c_kernel resources
