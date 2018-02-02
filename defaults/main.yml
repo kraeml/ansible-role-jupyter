@@ -54,6 +54,10 @@ dependencies_packages:
     - autoconf
     - pkg-config
     - libkrb5-dev
+    - texlive-xetex
+    - texlive
+    - texlive-latex-extra
+    - texlive-generic-extra
 
 pip3_packages:
     - jupyter
