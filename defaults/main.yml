@@ -73,6 +73,7 @@ pip3_packages:
     - psutil
     - paho-mqtt
     - tweepy
+    - jupyterlab
 
 gem_packages:
     - cztop
