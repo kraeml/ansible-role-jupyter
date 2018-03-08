@@ -187,12 +187,38 @@
 - name: Enable nbextension
   become: yes
   become_user: "{{ansible_user_id}}"
-  command: "jupyter nbextension enable {{item.name}}/{{item.file}}"
+  command: "jupyter nbextension enable {{item}}"
   with_items:
-    - name: datestamper
-      file: main
-    - name: execute_time
-      file: ExecuteTime
+    - datestamper/main
+    - execute_time/ExecuteTime
+    - nbextensions_configurator/config_menu/main
+    - rubberband/main
+    - spellchecker/main
+    - toc2/main
+    - codefolding/main
+    - freeze/main
+    - help_panel/help_panel
+    - highlight_selected_word/main
+    - hinterland/hinterland
+    - livemdpreview/livemdpreview
+    - python-markdown/main
+    - runtools/main
+    - snippets/main
+    - spellchecker/main
+    - varInspector/main
+    - contrib_nbextensions_help_item/main
+    - export_embedded/main
+    - gist_it/main
+    - highlighter/highlighter
+    - init_cell/main
+    - move_selected_cells/main
+    - printview/main
+    - ruler/main
+    - scratchpad/main
+    - snippets_menu/main
+    - splitcell/splitcell
+    - table_beautifier/main
+    - tree-filter/index
 
 #- name: Enable ipyleaflet
 #  become: yes
