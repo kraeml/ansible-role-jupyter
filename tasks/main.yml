@@ -32,7 +32,7 @@
   changed_when: False
 
 - name: Ensure outdated python packages are updated
-  shell: pip3 list --outdated --format=legacy | grep -v ansible | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
+  shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v libvirt | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
 
 - name: Ensure czmq is installed
@@ -184,6 +184,16 @@
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
 
+- name: Enable nbextension
+  become: yes
+  become_user: "{{ansible_user_id}}"
+  command: "jupyter nbextension enable {{item.name}}/{{item.file}}"
+  with_items:
+    - name: datestamper
+      file: main
+    - name: execute_time
+      file: ExecuteTime
+
 #- name: Enable ipyleaflet
 #  become: yes
 #  command: jupyter nbextension enable --py --sys-prefix ipyleaflet
@@ -198,3 +208,7 @@
       group: root
   notify:
     - restart_jupyter
+
+- name: Jupytelab extensions
+  become: yes
+  command: jupyter labextension install jupyterlab-drawio
