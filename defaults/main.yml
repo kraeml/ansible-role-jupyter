@@ -59,6 +59,7 @@ dependencies_packages:
     - texlive-latex-extra
     - texlive-generic-extra
     - libxml2-dev
+    - libxslt-dev
 
 pip3_packages:
     - jupyter
