@@ -31,10 +31,10 @@
   command: pip3 install --ignore-installed pip
   changed_when: False
 
-#- name: Ensure outdated python packages are updated
-#  shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v libvirt | grep -v isodate | grep -v pywinrm | grep -v XlsWriter | grep -v XlsxWriter | grep -v pyxdg | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
-#  changed_when: False
-#  ignore_errors: yes
+- name: Ensure outdated python packages are updated
+  shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v libvirt | grep -v isodate | grep -v pywinrm | grep -v XlsWriter | grep -v XlsxWriter | grep -v pyxdg | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
+  changed_when: False
+  ignore_errors: yes
 
 - name: Ensure czmq is installed
   stat:
