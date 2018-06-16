@@ -32,7 +32,7 @@
   changed_when: False
 
 - name: Ensure outdated python packages are updated
-  shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pycairo | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
+  shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pycairo | grep -v pygobject | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
 
 - name: Ensure czmq is installed
