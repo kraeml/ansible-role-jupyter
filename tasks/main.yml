@@ -115,6 +115,12 @@
   become: yes
   become_method: sudo
   become_flags: "-H"
+  command: npm config set unsafe-perm true
+
+- name: Ensure ijavascript is installed
+  become: yes
+  become_method: sudo
+  become_flags: "-H"
   npm:
       name: ijavascript
       global: yes
@@ -125,6 +131,12 @@
   command: /usr/bin/ijsinstall --install=global
   args:
     creates: /usr/local/share/jupyter/kernels/javascript
+
+- name: Ensure ijavascript is installed
+  become: yes
+  become_method: sudo
+  become_flags: "-H"
+  command: npm config set unsafe-perm false
 
 - name: Ensure RISE installed
   become: yes
