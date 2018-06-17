@@ -50,7 +50,7 @@ dependencies_packages:
     - ruby
     - ruby-dev
     - make
-    #- libzmq3-dev
+    - libzmq3-dev
     - autoconf
     - pkg-config
     - libkrb5-dev
