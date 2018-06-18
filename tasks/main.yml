@@ -123,7 +123,7 @@
   args:
     creates: /usr/local/share/jupyter/kernels/bash
 
-block:
+- block:
   - name: Ensure ijavascript is installed
     become: yes
     become_method: sudo
