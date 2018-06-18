@@ -60,7 +60,7 @@ dependencies_packages:
 
 pip3_packages:
     - jupyter
-    - readline
+    # - readline
     - ipyparallel
     - bash_kernel
     - ipython-sql
