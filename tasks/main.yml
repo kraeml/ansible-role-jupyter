@@ -22,7 +22,7 @@
   package:
     state: present
     name: python3-pip
-  when: pip3_version|failed
+  when: pip3_version is failed
 
 - name: Ensure lates pip is installed
   become: yes
