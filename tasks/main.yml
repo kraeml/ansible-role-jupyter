@@ -11,12 +11,16 @@
       state: present
       #name: "{{dependencies_packages}}"
       name: git
+  tags:
+    - base
 
 - name: Pip3 Version
   command: pip3 --version
   register: pip3_version
   ignore_errors: yes
   changed_when: False
+  tags:
+    - base
 
 - name: Ensure pip3 is installed
   become: yes
@@ -24,6 +28,8 @@
     state: present
     name: python3-pip
   when: pip3_version is failed
+  tags:
+    - base
 
 - name: Ensure lates pip is installed
   become: yes
@@ -31,10 +37,14 @@
   become_flags: "-H"
   command: pip3 install --ignore-installed pip
   changed_when: False
+  tags:
+    - pip_update
 
 - name: Ensure outdated python packages are updated
   shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pyxdg | grep -v pycairo | grep -v pygobject | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
+  tags:
+    - pip_update
 
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
@@ -43,6 +53,8 @@
     executable: pip3
     state: present
   with_items: "{{pip3_packages}}"
+  tags:
+    - base
 
 - block:
   - name: Ensure czmq is installed
@@ -94,12 +106,12 @@
   tags:
     - iruby
 
-- name: Stat of jupyter_c_kernel resources
-  stat:
-    path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
-  register: p
-
 - block:
+  - name: Stat of jupyter_c_kernel resources
+    stat:
+      path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
+    register: p
+
   - name: Ensure jupyter_c_kernel is installed via pip url
     become: yes
     pip:
@@ -123,6 +135,8 @@
   command: python3 -m bash_kernel.install
   args:
     creates: /usr/local/share/jupyter/kernels/bash
+  tags:
+    - base
 
 - block:
   - name: Ensure ijavascript is installed
@@ -154,26 +168,27 @@
   tags:
     - ijavascript
 
-#block:
-#  - name: Ensure RISE installed
-#    become: yes
-#    command: jupyter-nbextension install rise --py --sys-prefix
-#    args:
-#      creates: /usr/local/share/jupyter/nbextensions/rise/
-#    register: jupyter_rise
-#
-#  - name: Ensure RISE enabled
-#    become: yes
-#    command: jupyter-nbextension enable rise --py --sys-prefix
-#    when: jupyter_rise.changed
-#  tags:
-#    - rise
-#    - todo
+block:
+  - name: Ensure RISE installed
+    become: yes
+    command: jupyter-nbextension install rise --py --sys-prefix
+    args:
+      creates: /usr/local/share/jupyter/nbextensions/rise/
+    register: jupyter_rise
+
+  - name: Ensure RISE enabled
+    become: yes
+    command: jupyter-nbextension enable rise --py --sys-prefix
+    when: jupyter_rise.changed
+  tags:
+    - rise
 
 - name: Get nbextensions
   command: jupyter nbextension list
   register: jupyter_nbextensions
   changed_when: False
+  tags:
+    - base
 
 - name: Display nbextension
   debug:
@@ -184,6 +199,8 @@
   become: yes
   command: jupyter nbextension enable --py --sys-prefix widgetsnbextension
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
+  tags:
+    - base
 
 - name: Ensure notebook directory exists
   file:
@@ -194,6 +211,8 @@
   with_items:
       - notebooks
       - .jupyter
+  tags:
+    - base
 
 - name: Create jupyter config
   become: yes
@@ -205,16 +224,22 @@
       group: "{{ansible_user_id}}"
   notify:
     - restart_jupyter
+  tags:
+    - base
 
 - name: copies the nbextensions’ javascript and css files
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter contrib nbextension install --user
+  tags:
+    - base
 
 - name: Enable nbextensions
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
+  tags:
+    - base
 
 #- name: Enable ipyleaflet
 #  become: yes
@@ -230,3 +255,5 @@
       group: root
   notify:
     - restart_jupyter
+  tags:
+    - base
