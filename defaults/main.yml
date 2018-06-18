@@ -1,13 +1,16 @@
 ---
 # defaults file for jupyter
 # python3_version: "3.5"
+jupyter_dependencies_packages:
+  - python
+  - python-dev
+  - python-pip
+  - python3
+  - python3-dev
+  - python3-pip
+
 dependencies_packages:
     - libncurses5-dev
-    - python
-    - python-dev
-    - python3
-    - python3-dev
-    - python3-pip
     - pandoc
     - cmake
     - llvm
@@ -58,16 +61,17 @@ dependencies_packages:
     - texlive-latex-extra
     - texlive-generic-extra
 
+jupyter_pip3_packages:
+  - jupyter
+  - bash_kernel
+  - RISE
+  - jupyter_contrib_nbextensions
 pip3_packages:
-    - jupyter
     # - readline
     - ipyparallel
-    - bash_kernel
     - ipython-sql
     - ihtml
     - ExpectException
-    - RISE
-    - jupyter_contrib_nbextensions
 #    - ipyleaflet
     # - psutil
     # - paho-mqtt

@@ -9,10 +9,9 @@
   become: yes
   package:
       state: present
-      #name: "{{dependencies_packages}}"
-      name: git
+      name: "{{jupyter_dependencies_packages}}"
   tags:
-    - base
+    - jupyter_base
 
 - name: Pip3 Version
   command: pip3 --version
@@ -20,7 +19,7 @@
   ignore_errors: yes
   changed_when: False
   tags:
-    - base
+    - jupyter_base
 
 - name: Ensure pip3 is installed
   become: yes
@@ -29,7 +28,7 @@
     name: python3-pip
   when: pip3_version is failed
   tags:
-    - base
+    - jupyter_base
 
 - name: Ensure lates pip is installed
   become: yes
@@ -52,9 +51,9 @@
     name: "{{item}}"
     executable: pip3
     state: present
-  with_items: "{{pip3_packages}}"
+  with_items: "{{jupyter_pip3_packages}}"
   tags:
-    - base
+    - jupyter_base
 
 - block:
   - name: Ensure czmq is installed
@@ -136,7 +135,7 @@
   args:
     creates: /usr/local/share/jupyter/kernels/bash
   tags:
-    - base
+    - jupyter_base
 
 - block:
   - name: Ensure ijavascript is installed
@@ -182,14 +181,14 @@
     when: jupyter_rise.changed
   tags:
     - rise
-    - base
+    - jupyter_base
 
 - name: Get nbextensions
   command: jupyter nbextension list
   register: jupyter_nbextensions
   changed_when: False
   tags:
-    - base
+    - jupyter_base
 
 - name: Display nbextension
   debug:
@@ -201,7 +200,7 @@
   command: jupyter nbextension enable --py --sys-prefix widgetsnbextension
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   tags:
-    - base
+    - jupyter_base
 
 - name: Ensure notebook directory exists
   file:
@@ -213,7 +212,7 @@
       - notebooks
       - .jupyter
   tags:
-    - base
+    - jupyter_base
 
 - name: Create jupyter config
   become: yes
@@ -226,21 +225,21 @@
   notify:
     - restart_jupyter
   tags:
-    - base
+    - jupyter_base
 
 - name: copies the nbextensions’ javascript and css files
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter contrib nbextension install --user
   tags:
-    - base
+    - jupyter_base
 
 - name: Enable nbextensions
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
   tags:
-    - base
+    - jupyter_base
 
 #- name: Enable ipyleaflet
 #  become: yes
@@ -257,4 +256,4 @@
   notify:
     - restart_jupyter
   tags:
-    - base
+    - jupyter_base
