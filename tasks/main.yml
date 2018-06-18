@@ -9,7 +9,8 @@
   become: yes
   package:
       state: present
-      name: "{{dependencies_packages}}"
+      #name: "{{dependencies_packages}}"
+      name: git
 
 - name: Pip3 Version
   command: pip3 --version
