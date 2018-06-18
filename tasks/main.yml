@@ -168,7 +168,7 @@
   tags:
     - ijavascript
 
-block:
+- block:
   - name: Ensure RISE installed
     become: yes
     command: jupyter-nbextension install rise --py --sys-prefix
