@@ -37,13 +37,15 @@
   command: pip3 install --ignore-installed pip
   changed_when: False
   tags:
-    - pip_update
+    - jupyter_pip_update
+    - jupyter_not_base
 
 - name: Ensure outdated python packages are updated
   shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pyxdg | grep -v pycairo | grep -v pygobject | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
   tags:
-    - pip_update
+    - jupyter_pip_update
+    - jupyter_not_base
 
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
@@ -103,7 +105,8 @@
         creates: "{{ansible_user_dir}}/.ipython/kernels/ruby/kernel.json"
     notify: restart_jupyter
   tags:
-    - iruby
+    - jupyter_iruby
+    - jupyter_not_base
 
 - block:
   - name: Stat of jupyter_c_kernel resources
@@ -127,7 +130,8 @@
     args:
       creates: /usr/share/jupyter/kernels/c
   tags:
-    - c_kernel
+    - jupyter_c_kernel
+    - jupyter_not_base
 
 - name: Ensure bash kernel is installed
   become: yes
@@ -165,7 +169,8 @@
     become_flags: "-H"
     command: npm config set unsafe-perm false
   tags:
-    - ijavascript
+    - jupyter_ijavascript
+    - jupyter_not_base
 
 - block:
   - name: Ensure RISE installed
