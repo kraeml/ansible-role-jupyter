@@ -61,12 +61,12 @@ dependencies_packages:
 pip3_packages:
     - jupyter
     - readline
-    #- ipyparallel
+    - ipyparallel
     - bash_kernel
     - ipython-sql
     - ihtml
     - ExpectException
-    - RISE
+    # - RISE
     - jupyter_contrib_nbextensions
 #    - ipyleaflet
     - psutil

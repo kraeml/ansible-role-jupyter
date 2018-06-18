@@ -153,17 +153,21 @@
   tags:
     - ijavascript
 
-- name: Ensure RISE installed
-  become: yes
-  command: jupyter-nbextension install rise --py --sys-prefix
-  args:
-    creates: /usr/local/share/jupyter/nbextensions/rise/
-  register: jupyter_rise
-
-- name: Ensure RISE enabled
-  become: yes
-  command: jupyter-nbextension enable rise --py --sys-prefix
-  when: jupyter_rise.changed
+#block:
+#  - name: Ensure RISE installed
+#    become: yes
+#    command: jupyter-nbextension install rise --py --sys-prefix
+#    args:
+#      creates: /usr/local/share/jupyter/nbextensions/rise/
+#    register: jupyter_rise
+#
+#  - name: Ensure RISE enabled
+#    become: yes
+#    command: jupyter-nbextension enable rise --py --sys-prefix
+#    when: jupyter_rise.changed
+#  tags:
+#    - rise
+#    - todo
 
 - name: Get nbextensions
   command: jupyter nbextension list
