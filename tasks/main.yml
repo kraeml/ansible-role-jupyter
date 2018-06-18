@@ -182,6 +182,7 @@
     when: jupyter_rise.changed
   tags:
     - rise
+    - base
 
 - name: Get nbextensions
   command: jupyter nbextension list
