@@ -35,30 +35,6 @@
   shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pyxdg | grep -v pycairo | grep -v pygobject | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
   changed_when: False
 
-- name: Ensure czmq is installed
-  stat:
-      path:  /usr/local/share/zproject/czmq/
-  register: czmq
-  ignore_errors: yes
-  changed_when: False
-
-- name: Git repro for iruby dependencies
-  git:
-      dest: /tmp/czmq
-      # Absolute path of where the repository should be checked out to.
-      # This parameter is required, unless C(clone) is set to C(no) This change
-      # was made in version 1.8.3. Prior to this version, the C(dest) parameter
-      # was always required.
-      repo: https://github.com/zeromq/czmq
-      # git, SSH, or HTTP(S) protocol address of the git repository.
-  when: not czmq.stat.exists
-
-- name: Install czmq
-  shell: ./autogen.sh && ./configure && sudo make && sudo make install
-  args:
-    chdir: /tmp/czmq
-  when: not czmq.stat.exists
-
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
   pip:
@@ -67,43 +43,79 @@
     state: present
   with_items: "{{pip3_packages}}"
 
-- name: Install iruby for {{ansible_user_id}}
-  become: yes
-  become_flags: "-H"
-  shell: "gem install {{item}}"
-  args:
-      executable: /bin/bash
-      creates: /usr/local/bin/iruby
-  with_items: "{{gem_packages}}"
+- block:
+  - name: Ensure czmq is installed
+    stat:
+        path:  /usr/local/share/zproject/czmq/
+    register: czmq
+    ignore_errors: yes
+    changed_when: False
 
-- name: Install iruby kernel via {{ansible_user_id}}
-  become: yes
-  become_user: "{{ansible_user_id}}"
-  shell: "/usr/local/bin/iruby register --force"
-  args:
-      creates: "{{ansible_user_dir}}/.ipython/kernels/ruby/kernel.json"
-  notify: restart_jupyter
+  - name: Git repro for iruby dependencies
+    git:
+        dest: /tmp/czmq
+        # Absolute path of where the repository should be checked out to.
+        # This parameter is required, unless C(clone) is set to C(no) This change
+        # was made in version 1.8.3. Prior to this version, the C(dest) parameter
+        # was always required.
+        repo: https://github.com/zeromq/czmq
+        # git, SSH, or HTTP(S) protocol address of the git repository.
+    when: not czmq.stat.exists
+
+  - name: Install jupyter dependencies
+    become: yes
+    package:
+        state: present
+        name: libzmq3-dev
+
+  - name: Install czmq
+    shell: ./autogen.sh && ./configure && sudo make && sudo make install
+    args:
+      chdir: /tmp/czmq
+    when: not czmq.stat.exists
+
+  - name: Install iruby for {{ansible_user_id}}
+    become: yes
+    become_flags: "-H"
+    shell: "gem install {{item}}"
+    args:
+        executable: /bin/bash
+        creates: /usr/local/bin/iruby
+    with_items: "{{gem_packages}}"
+
+  - name: Install iruby kernel via {{ansible_user_id}}
+    become: yes
+    become_user: "{{ansible_user_id}}"
+    shell: "/usr/local/bin/iruby register --force"
+    args:
+        creates: "{{ansible_user_dir}}/.ipython/kernels/ruby/kernel.json"
+    notify: restart_jupyter
+  tags:
+    - iruby
 
 - name: Stat of jupyter_c_kernel resources
   stat:
     path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
   register: p
 
-- name: Ensure jupyter_c_kernel is installed via pip url
-  become: yes
-  pip:
-    name: "{{item}}"
-    executable: pip3
-    state: forcereinstall
-  with_items:
-    - https://raw.githubusercontent.com/kraeml/jupyter-c-kernel/master/dist/jupyter_c_kernel-1.2.8.tar.gz
-  when: p.stat.exists == False
+- block:
+  - name: Ensure jupyter_c_kernel is installed via pip url
+    become: yes
+    pip:
+      name: "{{item}}"
+      executable: pip3
+      state: forcereinstall
+    with_items:
+      - https://raw.githubusercontent.com/kraeml/jupyter-c-kernel/master/dist/jupyter_c_kernel-1.2.8.tar.gz
+    when: p.stat.exists == False
 
-- name: Ensure jupyter_c_kernel is installed
-  become: yes
-  command: /usr/local/bin/install_c_kernel --sys-prefix
-  args:
-    creates: /usr/share/jupyter/kernels/c
+  - name: Ensure jupyter_c_kernel is installed
+    become: yes
+    command: /usr/local/bin/install_c_kernel --sys-prefix
+    args:
+      creates: /usr/share/jupyter/kernels/c
+  tags:
+    - c_kernel
 
 - name: Ensure bash kernel is installed
   become: yes
@@ -111,32 +123,35 @@
   args:
     creates: /usr/local/share/jupyter/kernels/bash
 
-- name: Ensure ijavascript is installed
-  become: yes
-  become_method: sudo
-  become_flags: "-H"
-  command: npm config set unsafe-perm true
+block:
+  - name: Ensure ijavascript is installed
+    become: yes
+    become_method: sudo
+    become_flags: "-H"
+    command: npm config set unsafe-perm true
 
-- name: Ensure ijavascript is installed
-  become: yes
-  become_method: sudo
-  become_flags: "-H"
-  npm:
-      name: ijavascript
-      global: yes
-      state: present # The state of the node.js library
+  - name: Ensure ijavascript is installed
+    become: yes
+    become_method: sudo
+    become_flags: "-H"
+    npm:
+        name: ijavascript
+        global: yes
+        state: present # The state of the node.js library
 
-- name: Ensure ijavascript kernel is installed
-  become: yes
-  command: /usr/bin/ijsinstall --install=global
-  args:
-    creates: /usr/local/share/jupyter/kernels/javascript
+  - name: Ensure ijavascript kernel is installed
+    become: yes
+    command: /usr/bin/ijsinstall --install=global
+    args:
+      creates: /usr/local/share/jupyter/kernels/javascript
 
-- name: Ensure ijavascript is installed
-  become: yes
-  become_method: sudo
-  become_flags: "-H"
-  command: npm config set unsafe-perm false
+  - name: Ensure ijavascript is installed
+    become: yes
+    become_method: sudo
+    become_flags: "-H"
+    command: npm config set unsafe-perm false
+  tags:
+    - ijavascript
 
 - name: Ensure RISE installed
   become: yes

@@ -50,7 +50,6 @@ dependencies_packages:
     - ruby
     - ruby-dev
     - make
-    - libzmq3-dev
     - autoconf
     - pkg-config
     - libkrb5-dev
@@ -67,7 +66,7 @@ pip3_packages:
     - ipython-sql
     - ihtml
     - ExpectException
-    #- RISE
+    - RISE
     - jupyter_contrib_nbextensions
 #    - ipyleaflet
     - psutil
@@ -82,9 +81,9 @@ nodejs_version: "6.x"
 nodejs_npm_global_packages:
     - ijavascript
 
-open_browser: "False"
-ip: "*"
-port: 8888
-enable_mathjax: "True"
-notebook_dir: "{{ansible_user_dir}}/notebooks"
-password: "sha1:5815fb7ca805:f09ed218dfcc908acb3e29c3b697079fea37486a"
+jupyter_open_browser: "False"
+jupyter_ip: "*"
+jupyter_port: 8888
+jupyter_enable_mathjax: "True"
+jupyter_notebook_dir: "{{ansible_user_dir}}/notebooks"
+jupyter_password: "sha1:5815fb7ca805:f09ed218dfcc908acb3e29c3b697079fea37486a"

@@ -127,7 +127,7 @@
 #  connection, or for offline use of the notebook.
 #
 #  When disabled, equations etc. will appear as their untransformed TeX source.
-c.NotebookApp.enable_mathjax = {{enable_mathjax}}
+c.NotebookApp.enable_mathjax = {{jupyter_enable_mathjax}}
 
 ## extra paths to look for Javascript notebook extensions
 #c.NotebookApp.extra_nbextensions_path = []
@@ -159,7 +159,7 @@ c.NotebookApp.enable_mathjax = {{enable_mathjax}}
 #c.NotebookApp.iopub_msg_rate_limit = 1000
 
 ## The IP address the notebook server will listen on.
-c.NotebookApp.ip = '{{ip}}'
+c.NotebookApp.ip = '{{jupyter_ip}}'
 
 ## Supply extra arguments that will be passed to Jinja environment.
 #c.NotebookApp.jinja_environment_options = {}
@@ -199,13 +199,13 @@ c.NotebookApp.ip = '{{ip}}'
 #c.NotebookApp.nbserver_extensions = {}
 
 ## The directory to use for notebooks and kernels.
-c.NotebookApp.notebook_dir = '{{notebook_dir}}'
+c.NotebookApp.notebook_dir = '{{jupyter_notebook_dir}}'
 
 ## Whether to open in a browser after starting. The specific browser used is
 #  platform dependent and determined by the python standard library `webbrowser`
 #  module, unless it is overridden using the --browser (NotebookApp.browser)
 #  configuration option.
-c.NotebookApp.open_browser = {{open_browser}}
+c.NotebookApp.open_browser = {{jupyter_open_browser}}
 
 ## Hashed password to use for web authentication.
 #
@@ -214,7 +214,7 @@ c.NotebookApp.open_browser = {{open_browser}}
 #    from notebook.auth import passwd; passwd()
 #
 #  The string should be of the form type:salt:hashed-password.
-c.NotebookApp.password = '{{password}}'
+c.NotebookApp.password = '{{jupyter_password}}'
 
 ## Forces users to use a password for the Notebook server. This is useful in a
 #  multi user environment, for instance when everybody in the LAN can access each
@@ -225,7 +225,7 @@ c.NotebookApp.password = '{{password}}'
 #c.NotebookApp.password_required = False
 
 ## The port the notebook server will listen on.
-c.NotebookApp.port = {{port}}
+c.NotebookApp.port = {{jupyter_port}}
 
 ## The number of additional ports to try if the specified port is not available.
 #c.NotebookApp.port_retries = 50
