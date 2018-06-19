@@ -231,6 +231,10 @@
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter contrib nbextension install --user
+  args:
+    creates: /home/{{ansible_user_id}}/.local/share/jupyter/nbextensions/
+  register:
+    nbextension_install
   tags:
     - jupyter_base
 
@@ -238,6 +242,7 @@
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
+  when: nbextension_install changed
   tags:
     - jupyter_base
 
