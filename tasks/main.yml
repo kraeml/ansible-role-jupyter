@@ -261,8 +261,10 @@
   become: yes
   command: jupyter nbextension enable {{item.name}} --py --sys-prefix
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
+  when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   with_items:
     - name: widgetsnbextension
+      extension: jupyter-js-widgets/extension
   tags:
     - jupyter_base
 
@@ -272,7 +274,7 @@
   command: jupyter nbextension enable {{item.name}} --user
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   with_items:
-    - name: spellchecker
+    - name: spellchecker/main
   tags:
     - jupyter_base
 
