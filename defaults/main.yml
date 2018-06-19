@@ -1,14 +1,14 @@
 ---
 # defaults file for jupyter
 # python3_version: "3.5"
-jupyter_dependencies_packages:
-  - python3-pip
-
 jupyter_base: True
 jupyter_pip_update: False
 jupyter_iruby: False
 jupyter_c_kernel: False
 jupyter_ijavascript: False
+
+jupyter_dependencies_packages:
+  - python3-pip
 
 dependencies_packages:
     - python

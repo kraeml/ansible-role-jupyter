@@ -174,6 +174,13 @@
     - jupyter_not_base
   when: jupyter_ijavascript
 
+- name: Get nbextensions
+  command: jupyter nbextension list
+  register: jupyter_nbextensions
+  changed_when: False
+  tags:
+    - jupyter_base
+
 - block:
   - name: Ensure RISE installed
     become: yes
@@ -190,24 +197,10 @@
     - rise
     - jupyter_base
 
-- name: Get nbextensions
-  command: jupyter nbextension list
-  register: jupyter_nbextensions
-  changed_when: False
-  tags:
-    - jupyter_base
-
 - name: Display nbextension
   debug:
       var: jupyter_nbextensions
       verbosity: 2
-
-- name: Ensure widgetsnbextension activated
-  become: yes
-  command: jupyter nbextension enable --py --sys-prefix widgetsnbextension
-  # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
-  tags:
-    - jupyter_base
 
 - name: Ensure notebook directory exists
   file:
@@ -247,6 +240,24 @@
   command: jupyter nbextensions_configurator enable --user
   tags:
     - jupyter_base
+
+- name: Ensure some nbextensions are activated
+  become: yes
+  become_user: "{{ansible_user_id}}"
+  command: jupyter nbextension enable {{item}} --user
+  # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
+  with_items:
+    - widgetsnbextension
+    - spellchecker/main
+  tags:
+    - jupyter_base
+
+- name: Ensure de_DE dict for spellchecker is installed
+  become: yes
+  become_user: "{{ansible_user_id}}"
+  command: python3 /home/{{ansible_user_id}}/.local/share/jupyter/nbextensions/spellchecker/download_new_dict.py
+  args:
+    creates:  /home/{{ansible_user_id}}/.local/share/jupyter/nbextensions/spellchecker/typo/dictionaries/de_DE.aff
 
 #- name: Enable ipyleaflet
 #  become: yes
