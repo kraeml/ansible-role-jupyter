@@ -30,22 +30,21 @@
   tags:
     - jupyter_base
 
-- name: Ensure lates pip is installed
-  become: yes
-  become_method: sudo
-  become_flags: "-H"
-  command: pip3 install --ignore-installed pip
-  changed_when: False
-  tags:
-    - jupyter_pip_update
-    - jupyter_not_base
+- block:
+  - name: Ensure lates pip is installed
+    become: yes
+    become_method: sudo
+    become_flags: "-H"
+    command: pip3 install --ignore-installed pip
+    changed_when: False
 
-- name: Ensure outdated python packages are updated
-  shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pyxdg | grep -v pycairo | grep -v pygobject | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
-  changed_when: False
+  - name: Ensure outdated python packages are updated
+    shell: pip3 list --outdated --format=legacy | grep -v ansible | grep -v pyxdg | grep -v pycairo | grep -v pygobject | cut -d' ' -f1 | xargs sudo -H pip3 install --upgrade
+    changed_when: False
   tags:
     - jupyter_pip_update
     - jupyter_not_base
+  when: jupyter_pip_update
 
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
@@ -107,6 +106,7 @@
   tags:
     - jupyter_iruby
     - jupyter_not_base
+  when: jupyter_iruby
 
 - block:
   - name: Stat of jupyter_c_kernel resources
@@ -132,6 +132,7 @@
   tags:
     - jupyter_c_kernel
     - jupyter_not_base
+  when: jupyter_c_kernel
 
 - name: Ensure bash kernel is installed
   become: yes
@@ -171,6 +172,7 @@
   tags:
     - jupyter_ijavascript
     - jupyter_not_base
+  when: jupyter_ijavascript
 
 - block:
   - name: Ensure RISE installed
