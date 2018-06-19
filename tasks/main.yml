@@ -252,9 +252,9 @@
       var: jupyter_nbextensions
       #verbosity: 2
 
-- name: Ensure some nbextensions are activated
+- name: Ensure some nbextensions for sys are activated
   become: yes
-  command: jupyter nbextension enable {{item}} --py --sys-prefix
+  command: jupyter nbextension enable {{item.name}} --py --sys-prefix
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   with_items:
     - name: widgetsnbextension
@@ -264,10 +264,10 @@
 - name: Ensure some nbextensions are activated
   become: yes
   become_user: "{{ansible_user_id}}"
-  command: jupyter nbextension enable {{item}} --user
+  command: jupyter nbextension enable {{item.name}} --user
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   with_items:
-    - spellchecker
+    - name: spellchecker
   tags:
     - jupyter_base
 
