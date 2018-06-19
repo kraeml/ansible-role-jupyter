@@ -260,7 +260,7 @@
 - name: Ensure some nbextensions for sys are activated
   become: yes
   command: jupyter nbextension enable {{item.name}} --py --sys-prefix
-  when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension") != -1
+  # ToDo when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension") != -1
   with_items:
     - name: widgetsnbextension
       extension: jupyter-js-widgets/extension
