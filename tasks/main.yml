@@ -241,14 +241,29 @@
   tags:
     - jupyter_base
 
+- name: Get nbextensions
+  command: jupyter nbextension list
+  register: jupyter_nbextensions
+  changed_when: False
+  tags:
+    - jupyter_base
+
+- name: Ensure some nbextensions are activated
+  become: yes
+  command: jupyter nbextension enable {{item}} --py --sys-prefix
+  # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
+  with_items:
+    - name: widgetsnbextension
+  tags:
+    - jupyter_base
+
 - name: Ensure some nbextensions are activated
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextension enable {{item}} --user
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   with_items:
-    - widgetsnbextension
-    - spellchecker/main
+    - spellchecker
   tags:
     - jupyter_base
 
