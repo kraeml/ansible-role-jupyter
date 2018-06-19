@@ -247,6 +247,10 @@
   changed_when: False
   tags:
     - jupyter_base
+- name: Display nbextension
+  debug:
+      var: jupyter_nbextensions
+      #verbosity: 2
 
 - name: Ensure some nbextensions are activated
   become: yes
