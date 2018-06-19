@@ -274,6 +274,11 @@
   # ToDo: when: jupyter_nbextensions.stdout.find("jupyter-js-widgets/extension \u001b[32m enabled") != -1
   with_items:
     - name: spellchecker/main
+    - name: execute_time/ExecuteTime
+    - name: highlighter/highlighter
+    - name: python-markdown/main
+    - name: gist_it/main
+    - name: table_beautifier/main
   tags:
     - jupyter_base
 
