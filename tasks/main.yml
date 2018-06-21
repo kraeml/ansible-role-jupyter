@@ -57,6 +57,12 @@
     - jupyter_base
 
 - block:
+  - name: Install jupyter dependencies
+    become: yes
+    package:
+        state: present
+        name: "{{jupyter_iruby_dependencies_packages}}"
+  
   - name: Ensure czmq is installed
     stat:
         path:  /usr/local/share/zproject/czmq/
