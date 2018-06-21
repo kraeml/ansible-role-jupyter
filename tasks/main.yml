@@ -204,7 +204,7 @@
 
   - name: Ensure ijavascript kernel is installed
     become: yes
-    command: "{{ijsinstall_path}} --install=global"
+    command: "{{ijsinstall_path.stdout}} --install=global"
     args:
       creates: /usr/local/share/jupyter/kernels/javascript
 
