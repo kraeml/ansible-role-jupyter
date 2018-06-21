@@ -116,7 +116,7 @@
 
 - block:
   - name: Which python3 version is installed
-    command: python3 --version | cut -d ' ' -f 2
+    shell: "python3 --version | cut -d ' ' -f 2"
     register: python3_version
 
   - debug:
