@@ -157,6 +157,22 @@
     - jupyter_base
 
 - block:
+  - name: Nodejs and dependencies are installed
+    command: nodejs --version
+    register: nodejs_version
+    ignore_errors: yes
+    changed_when: False
+
+  - name: Ensure Nodejs and dependencies are installed
+    become: yes
+    package:
+      state: present
+      name: "{{item}}"
+    with_items:
+      - nodejs
+      - npm
+    when: nodejs_version is failed
+
   - name: Ensure ijavascript is installed
     become: yes
     become_method: sudo
