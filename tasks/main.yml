@@ -125,7 +125,7 @@
 
   - name: Stat of jupyter_c_kernel resources
     stat:
-      path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
+      path: "/usr/local/lib/python{{python3_version.stdout}}/dist-packages/jupyter_c_kernel/resources/"
     register: p
 
   - name: Ensure jupyter_c_kernel is installed via pip url
