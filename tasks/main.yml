@@ -90,7 +90,10 @@
     register: czmq
     ignore_errors: yes
     changed_when: False
-    when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16
+
+  - debug:
+      var: czmq
+      verbosity: 2
 
   - name: Git repro for iruby dependencies
     git:
