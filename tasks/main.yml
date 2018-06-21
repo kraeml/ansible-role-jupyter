@@ -159,12 +159,12 @@
 - block:
   - name: Nodejs and dependencies are installed
     command: nodejs --version
-    register: nodejs_version
+    register: system_nodejs_version
     ignore_errors: yes
     changed_when: False
 
   - debug:
-      var: nodejs_version
+      var: system_nodejs_version
       verbosity: 2
 
   - name: Ensure Nodejs and dependencies are installed
@@ -175,7 +175,7 @@
     with_items:
       - nodejs
       - npm
-    when: nodejs_version is failed
+    when: system_nodejs_version is failed
 
   - name: Ensure ijavascript is installed
     become: yes
