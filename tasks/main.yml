@@ -163,6 +163,10 @@
     ignore_errors: yes
     changed_when: False
 
+  - debug:
+      var: nodejs_version
+      verbosity: 2
+
   - name: Ensure Nodejs and dependencies are installed
     become: yes
     package:
