@@ -14,7 +14,8 @@ jupyter_iruby_dependencies_packages:
   - libtool
   - autoconf
   - pkg-config
-  
+  - ruby
+
 dependencies_packages:
     - python
     - python-dev
@@ -60,7 +61,6 @@ dependencies_packages:
     - libgirepository1.0-dev
     - libcurl4-openssl-dev
     - libffi-dev
-    - ruby
     - ruby-dev
     - make
     - libkrb5-dev
