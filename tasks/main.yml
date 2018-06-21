@@ -261,7 +261,7 @@
     - jupyter_base
 
 - name: Get nbextensions
-  command: jupyter nbextension list
+  shell: jupyter nbextension list
   register: jupyter_nbextensions
   changed_when: False
   tags:
