@@ -71,7 +71,7 @@
     with_items:
       - libzmq3-dev
       - libczmq-dev
-    when: ansible_distribution == 'Ubuntu' and ansible_mayor_version|int >= 17
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_mayor_version|int >= 17
 
   - name: Install iruby dependencies ubuntu 16.04 and older
     become: yes
@@ -82,7 +82,7 @@
       - autoconf
       - pkg-config
       - libzmq-dev
-    when: ansible_distribution == 'Ubuntu' and ansible_mayor_version|int =< 16
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_mayor_version|int =< 16
 
   - name: Ensure czmq is installed
     stat:
@@ -90,7 +90,7 @@
     register: czmq
     ignore_errors: yes
     changed_when: False
-    when: ansible_distribution == 'Ubuntu' and ansible_mayor_version|int =< 16
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_mayor_version|int =< 16
 
   - name: Git repro for iruby dependencies
     git:
@@ -101,13 +101,13 @@
         # was always required.
         repo: https://github.com/zeromq/czmq
         # git, SSH, or HTTP(S) protocol address of the git repository.
-    when: not czmq.stat.exists and ansible_distribution == 'Ubuntu' and ansible_mayor_version|int =< 16
+    when: not czmq.stat.exists and ansible_distribution == 'Ubuntu' and ansible_distribution_mayor_version|int =< 16
 
   - name: Install czmq
     shell: ./autogen.sh && ./configure && sudo make && sudo make install
     args:
       chdir: /tmp/czmq
-    when: not czmq.stat.exists and ansible_distribution == 'Ubuntu' and ansible_mayor_version|int =< 16
+    when: not czmq.stat.exists and ansible_distribution == 'Ubuntu' and ansible_distribution_mayor_version|int =< 16
 
   - name: Install iruby for {{ansible_user_id}}
     become: yes
