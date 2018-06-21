@@ -12,6 +12,7 @@ jupyter_dependencies_packages:
 
 jupyter_iruby_dependencies_packages:
   - libtool
+  - autoconf
 
 dependencies_packages:
     - python
@@ -61,7 +62,6 @@ dependencies_packages:
     - ruby
     - ruby-dev
     - make
-    - autoconf
     - pkg-config
     - libkrb5-dev
     - texlive-xetex
