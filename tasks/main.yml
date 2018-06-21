@@ -62,7 +62,7 @@
     package:
         state: present
         name: "{{jupyter_iruby_dependencies_packages}}"
-  
+
   - name: Ensure czmq is installed
     stat:
         path:  /usr/local/share/zproject/czmq/
@@ -115,6 +115,14 @@
   when: jupyter_iruby
 
 - block:
+  - name: Which python3 version is installed
+    command: python3 --version | cut -d ' ' -f 2
+    register: python3_version
+
+  - debug:
+      var: python3_version
+      verbosity: 2
+
   - name: Stat of jupyter_c_kernel resources
     stat:
       path: "/usr/local/lib/python{{python3_version}}/dist-packages/jupyter_c_kernel/resources/"
@@ -261,7 +269,7 @@
 - name: Display nbextension
   debug:
       var: jupyter_nbextensions
-      #verbosity: 2
+      verbosity: 2
 
 - name: Ensure some nbextensions for sys are activated
   become: yes
