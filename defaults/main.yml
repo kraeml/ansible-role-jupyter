@@ -12,10 +12,10 @@ jupyter_dependencies_packages:
 
 jupyter_iruby_dependencies_packages:
   - libtool
-  - autoconf
-  - pkg-config
-  - ruby
   - libffi-dev
+  - ruby
+  - ruby-dev
+  - make
 
 dependencies_packages:
     - python
