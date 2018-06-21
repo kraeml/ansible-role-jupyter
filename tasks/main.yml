@@ -101,13 +101,13 @@
         # was always required.
         repo: https://github.com/zeromq/czmq
         # git, SSH, or HTTP(S) protocol address of the git repository.
-    when: not czmq.stat.exists and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16
+    when: (not czmq.stat.exists) and (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16)
 
   - name: Install czmq
     shell: ./autogen.sh && ./configure && sudo make && sudo make install
     args:
       chdir: /tmp/czmq
-    when: not czmq.stat.exists and ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16
+    when: (not czmq.stat.exists) and (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16)
 
   - name: Install iruby for {{ansible_user_id}}
     become: yes
