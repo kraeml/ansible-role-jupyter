@@ -95,18 +95,13 @@
       var: czmq
       verbosity: 2
 
-  - name: Git repro for iruby dependencies
+  - name: Git repro for iruby dependencies for ubuntu 16.04 and older
     git:
         dest: /tmp/czmq
-        # Absolute path of where the repository should be checked out to.
-        # This parameter is required, unless C(clone) is set to C(no) This change
-        # was made in version 1.8.3. Prior to this version, the C(dest) parameter
-        # was always required.
         repo: https://github.com/zeromq/czmq
-        # git, SSH, or HTTP(S) protocol address of the git repository.
     when: (not czmq.stat.exists) and (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16)
 
-  - name: Install czmq
+  - name: Install czmq for ubuntu 16.04 and older
     shell: ./autogen.sh && ./configure && sudo make && sudo make install
     args:
       chdir: /tmp/czmq
@@ -248,14 +243,14 @@
   - name: Ensure RISE installed
     become: yes
     command: jupyter-nbextension install rise --py --sys-prefix
-    args:
-      creates: /usr/local/share/jupyter/nbextensions/rise/
-    register: jupyter_rise
+    #args:
+    #  creates: /usr/local/share/jupyter/nbextensions/rise/
+    #register: jupyter_rise
 
   - name: Ensure RISE enabled
     become: yes
     command: jupyter-nbextension enable rise --py --sys-prefix
-    when: jupyter_rise.changed
+    #when: jupyter_rise.changed
   tags:
     - rise
     - jupyter_base
