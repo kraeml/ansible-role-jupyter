@@ -74,6 +74,9 @@ jupyter_pip3_packages:
   - bash_kernel
   - RISE
   - jupyter_contrib_nbextensions
+  # pixiedust_node extension
+  - pixiedust_node
+  - matplotlib
 pip3_packages:
     # - readline
     - ipyparallel
