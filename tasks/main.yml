@@ -232,6 +232,20 @@
     - jupyter_not_base
   when: jupyter_ijavascript
 
+- block:
+  # ToDo imongo via github
+  # rights for log workaround
+  # imongo is not stable
+  # not for jupyter-lab
+  # 07.2018
+  - name: Debug information
+    debug:
+      msg: Imongo for jupyter
+  tags:
+    - jupyter_imongo
+    - jupyter_not_base
+  when: jupyter_imongo
+
 - name: Get nbextensions
   command: jupyter nbextension list
   register: jupyter_nbextensions
