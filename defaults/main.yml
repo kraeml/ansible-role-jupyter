@@ -4,7 +4,7 @@
 jupyter_base: True
 jupyter_pip_update: False
 jupyter_iruby: False
-jupyter_c_kernel: True
+jupyter_c_kernel: False
 jupyter_ijavascript: False
 jupyter_imongo: False
 
