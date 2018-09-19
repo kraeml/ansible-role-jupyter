@@ -10,9 +10,16 @@ jupyter_imongo: False
 
 jupyter_dependencies_packages:
   - python3-pip
+  # matplotlib
   - libfreetype6-dev
   - pkg-config
   - libpng-dev
+  # ToDo latex
+  - pandoc
+  - texlive-xetex
+  - texlive
+  - texlive-latex-extra
+  - texlive-generic-extra
 
 jupyter_iruby_dependencies_packages:
   - libtool
@@ -28,7 +35,6 @@ dependencies_packages:
     - python3
     - python3-dev
     - libncurses5-dev
-    - pandoc
     - cmake
     - llvm
     - llvm-dev
@@ -67,10 +73,6 @@ dependencies_packages:
     - ruby-dev
     - make
     - libkrb5-dev
-    - texlive-xetex
-    - texlive
-    - texlive-latex-extra
-    - texlive-generic-extra
 
 jupyter_pip3_packages:
   - jupyter
