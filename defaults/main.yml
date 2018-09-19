@@ -60,6 +60,8 @@ dependencies_packages:
     - libjpeg-dev
     - libfreetype6
     - libfreetype6-dev
+    - pkg-config
+    - libpng-dev
     - libgirepository1.0-dev
     - libcurl4-openssl-dev
     - ruby-dev
