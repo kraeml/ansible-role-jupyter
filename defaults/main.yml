@@ -10,6 +10,9 @@ jupyter_imongo: False
 
 jupyter_dependencies_packages:
   - python3-pip
+  - libfreetype6-dev
+  - pkg-config
+  - libpng-dev
 
 jupyter_iruby_dependencies_packages:
   - libtool
@@ -59,9 +62,6 @@ dependencies_packages:
     - libjpeg8
     - libjpeg-dev
     - libfreetype6
-    - libfreetype6-dev
-    - pkg-config
-    - libpng-dev
     - libgirepository1.0-dev
     - libcurl4-openssl-dev
     - ruby-dev
