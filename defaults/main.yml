@@ -102,7 +102,7 @@ nodejs_npm_global_packages:
     - ijavascript
 
 jupyter_open_browser: "False"
-jupyter_ip: "*"
+jupyter_ip: "0.0.0.0"
 jupyter_port: 8888
 jupyter_enable_mathjax: "True"
 jupyter_notebook_dir: "{{ansible_user_dir}}/notebooks"
