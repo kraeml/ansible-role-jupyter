@@ -97,7 +97,7 @@ gem_packages:
     - cztop
     - iruby
 
-nodejs_version: "6.x"
+nodejs_version: "8.x"
 nodejs_npm_global_packages:
     - ijavascript
 

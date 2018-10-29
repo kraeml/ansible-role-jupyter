@@ -49,10 +49,9 @@
 - name: Ensure Jupyter and some kernel/extensions are installed
   become: yes
   pip:
-    name: "{{item}}"
+    name: "{{jupyter_pip3_packages}}"
     executable: pip3
     state: present
-  with_items: "{{jupyter_pip3_packages}}"
   tags:
     - jupyter_base
 
@@ -68,20 +67,18 @@
     package:
         state: present
         name: "{{item}}"
-    with_items:
-      - libzmq3-dev
-      - libczmq-dev
+        - libzmq3-dev
+        - libczmq-dev
     when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 17
 
   - name: Install iruby dependencies ubuntu 16.04 and older
     become: yes
     package:
         state: present
-        name: "{{item}}"
-    with_items:
-      - autoconf
-      - pkg-config
-      - libzmq-dev
+        name:
+          - autoconf
+          - pkg-config
+          - libzmq-dev
     when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int <= 16
 
   - name: Ensure czmq is installed
