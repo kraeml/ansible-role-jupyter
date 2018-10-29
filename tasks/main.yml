@@ -66,9 +66,9 @@
     become: yes
     package:
         state: present
-        name: "{{item}}"
-        - libzmq3-dev
-        - libczmq-dev
+        name:
+          - libzmq3-dev
+          - libczmq-dev
     when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 17
 
   - name: Install iruby dependencies ubuntu 16.04 and older
