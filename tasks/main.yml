@@ -142,11 +142,10 @@
   - name: Ensure jupyter_c_kernel is installed via pip url
     become: yes
     pip:
-      name: "{{item}}"
+      name:
+        - https://raw.githubusercontent.com/kraeml/jupyter-c-kernel/master/dist/jupyter_c_kernel-1.2.8.tar.gz
       executable: pip3
       state: forcereinstall
-    with_items:
-      - https://raw.githubusercontent.com/kraeml/jupyter-c-kernel/master/dist/jupyter_c_kernel-1.2.8.tar.gz
     when: p.stat.exists == False
 
   - name: Ensure jupyter_c_kernel is installed
@@ -182,10 +181,9 @@
     become: yes
     package:
       state: present
-      name: "{{item}}"
-    with_items:
-      - nodejs
-      - npm
+      name:
+        - nodejs
+        - npm
     when: system_nodejs_version is failed
 
   - name: Set npm unsafe-perm
