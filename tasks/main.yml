@@ -46,14 +46,62 @@
     - jupyter_not_base
   when: jupyter_pip_update
 
-- name: Ensure Jupyter and some kernel/extensions are installed
-  become: yes
-  pip:
-    name: "{{jupyter_pip3_packages}}"
-    executable: pip3
-    state: present
-  tags:
-    - jupyter_base
+# Works in a loop not proper
+- name: Workaround pip install Jupyter
+  block:
+  - name: Ensure Jupyter and some kernel/extensions are installed
+    become: yes
+    pip:
+      name: "{{jupyter_pip3_packages[0]}}"
+      executable: pip3
+      state: present
+    tags:
+      - jupyter_base
+
+  - name: Ensure Jupyter and some kernel/extensions are installed
+    become: yes
+    pip:
+      name: "{{jupyter_pip3_packages[1]}}"
+      executable: pip3
+      state: present
+    tags:
+      - jupyter_base
+
+  - name: Ensure Jupyter and some kernel/extensions are installed
+    become: yes
+    pip:
+      name: "{{jupyter_pip3_packages[2]}}"
+      executable: pip3
+      state: present
+    tags:
+      - jupyter_base
+
+  - name: Ensure Jupyter and some kernel/extensions are installed
+    become: yes
+    pip:
+      name: "{{jupyter_pip3_packages[3]}}"
+      executable: pip3
+      state: present
+    tags:
+      - jupyter_base
+
+  - name: Ensure Jupyter and some kernel/extensions are installed
+    become: yes
+    pip:
+      name: "{{jupyter_pip3_packages[4]}}"
+      executable: pip3
+      state: present
+    tags:
+      - jupyter_base
+
+  - name: Ensure Jupyter and some kernel/extensions are installed
+    become: yes
+    pip:
+      name: "{{jupyter_pip3_packages[5]}}"
+      executable: pip3
+      state: present
+    tags:
+      - jupyter_base
 
 - block:
   - name: Install iruby dependencies
