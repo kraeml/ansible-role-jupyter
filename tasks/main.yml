@@ -411,6 +411,7 @@
   command: python3 /home/{{ansible_user_id}}/.local/share/jupyter/nbextensions/spellchecker/download_new_dict.py
   args:
     creates:  /home/{{ansible_user_id}}/.local/share/jupyter/nbextensions/spellchecker/typo/dictionaries/de_DE.aff
+  ignore_errors: yes
 
 #- name: Enable ipyleaflet
 #  become: yes
