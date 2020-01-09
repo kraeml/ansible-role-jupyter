@@ -76,6 +76,7 @@ dependencies_packages:
 
 jupyter_pip3_packages:
   - jupyter
+  - jupyterlab
   - bash_kernel
   - RISE
   - jupyter_contrib_nbextensions

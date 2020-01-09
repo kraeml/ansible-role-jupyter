@@ -4,7 +4,7 @@ Wants=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/jupyter-notebook
+ExecStart=/usr/local/bin/jupyter-lab
 Restart=on-failure
 Nice=5
 User={{ansible_user_id}}
