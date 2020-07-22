@@ -216,7 +216,7 @@
 
 - block:
   - name: Nodejs and dependencies are installed
-    command: nodejs --version
+    command: node --version
     register: system_nodejs_version
     ignore_errors: yes
     changed_when: False
