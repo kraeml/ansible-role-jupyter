@@ -19,7 +19,7 @@ jupyter_dependencies_packages:
   - texlive-xetex
   - texlive
   - texlive-latex-extra
-  - texlive-generic-extra
+  #- texlive-generic-extra
 
 jupyter_iruby_dependencies_packages:
   - libtool
