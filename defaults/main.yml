@@ -15,6 +15,7 @@ jupyter_dependencies_packages:
   - pkg-config
   - libpng-dev
   - octave
+  - gnuplot
 
 jupyter_latex_packages:
   # ToDo latex
