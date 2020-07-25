@@ -338,6 +338,7 @@
       owner: "{{ansible_user_id}}"
       group: "{{ansible_user_id}}"
   notify:
+    - rebuild_jupyter
     - restart_jupyter
   tags:
     - jupyter_base

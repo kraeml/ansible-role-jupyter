@@ -6,3 +6,7 @@
       enabled: yes
       state: restarted
       name: jupyter
+
+- name: rebuild_jupyter
+  become: yes
+  command: jupyter lab build

@@ -14,6 +14,9 @@ jupyter_dependencies_packages:
   - libfreetype6-dev
   - pkg-config
   - libpng-dev
+  - octave
+
+jupyter_latex_packages:
   # ToDo latex
   - pandoc
   - texlive-xetex
@@ -29,9 +32,9 @@ jupyter_iruby_dependencies_packages:
   - make
 
 dependencies_packages:
-    - python
-    - python-dev
-    - python-pip
+    #- python
+    #- python-dev
+    #- python-pip
     - python3
     - python3-dev
     - libncurses5-dev
@@ -83,6 +86,10 @@ jupyter_pip3_packages:
   # pixiedust_node extension
   - pixiedust_node
   - matplotlib
+  - jupyterlab_git
+  - jupyterlab_gitlab
+  - octave_kernel
+
 pip3_packages:
     # - readline
     - ipyparallel
