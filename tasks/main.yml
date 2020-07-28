@@ -52,10 +52,9 @@
   - name: Ensure Jupyter and some kernel/extensions are installed
     become: yes
     pip:
-      name: "{{item}}"
+      name: "{{jupyter_pip3_packages}}"
       executable: pip3
       state: present
-    with_items: "{{jupyter_pip3_packages}}"
     tags:
       - jupyter_base
 
