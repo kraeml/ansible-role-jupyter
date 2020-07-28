@@ -265,7 +265,7 @@
     #when: jupyter_rise.changed
     with_items:
       - rise
-      - ipywidgets
+      #- ipywidgets
       - jupyros
     notify:
       - restart_jupyter
