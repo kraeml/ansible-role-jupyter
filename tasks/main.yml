@@ -55,8 +55,7 @@
       name: "{{item}}"
       executable: pip3
       state: present
-    with_items:
-      - jupyter_pip3_packages
+    with_items: "{{jupyter_pip3_packages}}"
     tags:
       - jupyter_base
 
