@@ -93,6 +93,7 @@ jupyter_pip3_packages:
   - bqplot
   - pyyaml
   - ipywidgets
+  - jupyros
 
 pip3_packages:
     # - readline

@@ -263,8 +263,19 @@
 
   - name: Ensure RISE enabled
     become: yes
-    command: jupyter-nbextension enable rise --py --sys-prefix
+    command: jupyter-nbextension enable --py --sys-prefix {{item}}
     #when: jupyter_rise.changed
+    with_items:
+      - rise
+      - ipywidgets
+      - jupyros
+    register:
+      - restart_jupyter
+      - rebuild_jupyter
+
+  - name: Enable jupyteros
+    become: yes
+    command: jupyter labextension install jupyter-ros
   tags:
     - rise
     - jupyter_base
