@@ -266,21 +266,21 @@
     with_items:
       - rise
       #- ipywidgets
-      - jupyros
+      #- jupyros
     notify:
       - restart_jupyter
       - rebuild_jupyter
 
-  - name: rebuild_jupyter
-    become: yes
-    command: jupyter lab build
+  #- name: rebuild_jupyter
+  #  become: yes
+  #  command: jupyter lab build
 
-  - name: Enable jupyteros
-    become: yes
-    command: jupyter labextension install {{item}}
-    with_items:
-      - jupyter-ros
-      - " @jupyter-widgets/jupyterlab-manager"
+  #- name: Enable jupyteros
+  #  become: yes
+  #  command: jupyter labextension install {{item}}
+  #  with_items:
+  #    - jupyter-ros
+  #    - " @jupyter-widgets/jupyterlab-manager"
   tags:
     - rise
     - jupyter_base
