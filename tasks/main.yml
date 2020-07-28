@@ -268,7 +268,7 @@
       - rise
       - ipywidgets
       - jupyros
-    register:
+    notify:
       - restart_jupyter
       - rebuild_jupyter
 
