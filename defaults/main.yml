@@ -90,6 +90,9 @@ jupyter_pip3_packages:
   - jupyterlab_git
   - jupyterlab_gitlab
   - octave_kernel
+  - bqplot
+  - pyyaml
+  - ipywidgets
 
 pip3_packages:
     # - readline
@@ -97,6 +100,7 @@ pip3_packages:
     - ipython-sql
     - ihtml
     - ExpectException
+
 #    - ipyleaflet
     # - psutil
     # - paho-mqtt
