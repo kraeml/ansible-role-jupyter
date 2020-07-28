@@ -92,8 +92,8 @@ jupyter_pip3_packages:
   - octave_kernel
   - bqplot
   - pyyaml
-  - ipywidgets
-  - jupyros
+  #- ipywidgets
+  #- jupyros
 
 pip3_packages:
     # - readline
