@@ -9,4 +9,4 @@
 
 - name: rebuild_jupyter
   become: yes
-  command: jupyter lab build
+  command: jupyter lab build --dev-build=False --minimize=False
