@@ -327,6 +327,7 @@
     nbextension_install
   tags:
     - jupyter_base
+    - todo
 
 - name: Enable nbextensions
   become: yes
