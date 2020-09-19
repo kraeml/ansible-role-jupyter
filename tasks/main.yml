@@ -284,7 +284,7 @@
   tags:
     - rise
     - jupyter_base
-    #- todo
+    - todo
 
 - name: Display nbextension
   debug:
