@@ -336,6 +336,7 @@
   when: nbextension_install.changed
   tags:
     - jupyter_base
+    - todo
 
 - name: Get nbextensions
   shell: jupyter nbextension list
@@ -343,6 +344,7 @@
   changed_when: False
   tags:
     - jupyter_base
+     todo
 - name: Display nbextension
   debug:
       var: jupyter_nbextensions
@@ -357,6 +359,7 @@
       extension: jupyter-js-widgets/extension
   tags:
     - jupyter_base
+    - todo
 
 - name: Ensure some nbextensions are activated
   become: yes
@@ -380,6 +383,7 @@
     - name: tree-filter/index
   tags:
     - jupyter_base
+    - todo
 
 - name: Ensure de_DE dict for spellchecker is installed
   become: yes
@@ -389,6 +393,9 @@
     creates:  /home/{{ansible_user_id}}/.local/share/jupyter/nbextensions/spellchecker/typo/dictionaries/de_DE.aff
   # ToDo Wegen pi-gen install
   ignore_errors: yes
+  tags:
+    - jupyter_base
+    - todo
 
 #- name: Enable ipyleaflet
 #  become: yes
