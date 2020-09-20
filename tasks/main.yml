@@ -333,7 +333,7 @@
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
-  when: nbextension_install.changed
+  #when: nbextension_install.changed
   tags:
     - jupyter_base
     - todo
