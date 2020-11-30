@@ -169,6 +169,14 @@
   tags:
     - jupyter_base
 
+- name: Ensure sshkernel kernel is installed
+  become: yes
+  command: python3 -m sshkernel install
+  args:
+    creates: /usr/local/share/jupyter/kernels/ssh
+  tags:
+    - jupyter_base
+
 - block:
   - name: Nodejs and dependencies are installed
     command: node --version
