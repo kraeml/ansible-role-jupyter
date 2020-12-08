@@ -84,6 +84,7 @@ jupyter_pip3_packages:
   - jupyterlab
   - bash_kernel
   - sshkernel
+  - jupyter_micropython_kernel
   - RISE
   - jupyter_contrib_nbextensions
   # pixiedust_node extension
