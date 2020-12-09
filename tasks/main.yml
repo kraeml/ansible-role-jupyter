@@ -179,7 +179,7 @@
 
 - name: Ensure jupyter_micropython_kernel kernel is installed
   become: yes
-  command: python3 -m jupyter_micropython_kernel install
+  command: python3 -m jupyter_micropython_kernel.install
   args:
     creates: /usr/local/share/jupyter/kernels/micropython
   tags:
