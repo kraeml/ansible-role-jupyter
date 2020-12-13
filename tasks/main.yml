@@ -320,7 +320,7 @@
 
 - name: Enable sos
   become: yes
-  command: NODE_OPTIONS=--max_old_space_size=2048 sudo jupyter labextension install --minimize=False {{item}}
+  command: NODE_OPTIONS=--max_old_space_size=3072 sudo jupyter labextension install --minimize=False {{item}}
   with_items:
     - transient-display-data
     - jupyterlab-sos
