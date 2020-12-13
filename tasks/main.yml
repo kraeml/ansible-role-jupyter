@@ -291,10 +291,12 @@
   #  become: yes
   #  command: jupyter lab build
 
-  #- name: Enable jupyteros
-  #  become: yes
-  #  command: jupyter labextension install {{item}}
-  #  with_items:
+  - name: Enable jupyteros
+    become: yes
+    command: jupyter labextension install {{item}}
+    with_items:
+      - transient-display-data
+      - jupyterlab-sos
   #    - jupyter-ros
   #    - " @jupyter-widgets/jupyterlab-manager"
   tags:

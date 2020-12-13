@@ -95,6 +95,10 @@ jupyter_pip3_packages:
   - octave_kernel
   - bqplot
   - pyyaml
+  - sos
+  - sos-notebook
+  - sos-papermill
+  - sos-r
   #- ipywidgets
   #- jupyros
 
