@@ -99,6 +99,7 @@ jupyter_pip3_packages:
   - sos-notebook
   - sos-papermill
   - sos-r
+  - markdown-kernel
   #- ipywidgets
   #- jupyros
 

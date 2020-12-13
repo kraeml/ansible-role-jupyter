@@ -177,6 +177,22 @@
   tags:
     - jupyter_base
 
+- name: Ensure markdown kernel is installed
+  become: yes
+  command: python3 -m markdown_kernel.install
+  args:
+    creates: /usr/local/share/jupyter/kernels/markdown
+  tags:
+    - jupyter_base
+
+- name: Ensure sos kernel is installed
+  become: yes
+  command: python3 -m sos.install
+  args:
+    creates: /usr/local/share/jupyter/kernels/sos
+  tags:
+    - jupyter_base
+
 - name: Ensure jupyter_micropython_kernel kernel is installed
   become: yes
   command: python3 -m jupyter_micropython_kernel.install
