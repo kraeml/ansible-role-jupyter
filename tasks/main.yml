@@ -320,12 +320,11 @@
 
 - name: Enable sos
   become: yes
-  command: NODE_OPTIONS=--max_old_space_size=3072 jupyter labextension install --minimize=False {{item}}
+  shell: NODE_OPTIONS=--max_old_space_size=3072 jupyter labextension install --minimize=False {{item}}
   with_items:
     - transient-display-data
     - jupyterlab-sos
     - "@ijmbarr/jupyterlab_spellchecker"
-  ignore_errors: True
 
 - name: Display nbextension
   debug:
