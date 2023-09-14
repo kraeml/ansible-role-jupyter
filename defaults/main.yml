@@ -11,6 +11,7 @@ jupyter_imongo: False
 jupyter_RISE: false
 jupyter_sos: false
 jupyter_nbextensions_todo: false
+jupyter_rebuild: false
 
 jupyter_dependencies_packages:
   - python3-pip

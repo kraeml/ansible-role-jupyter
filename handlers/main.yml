@@ -10,3 +10,4 @@
 - name: rebuild_jupyter
   become: yes
   shell: NODE_OPTIONS='--max_old_space_size=3072' jupyter lab build --minimize=False
+  when: jupyter_rebuild
