@@ -106,17 +106,9 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  config.vm.provision "shell", inline: <<-SHELL
     # apt-get update
-    echo "Hallo $(hostname)!"
-    echo "Webseite unter:"
-    echo "http://$(ip address show enp0s8 | grep 'inet ' | cut -d t -f 2 | cut -d / -f 1 | tr -d ' ')/~vagrant"
-    echo "kann noch leer sein, wenn im Ordner www keine Datei angelegt wurde."
-    echo "PhpMyAdmin unter:"
-    echo "http://$(ip address show enp0s8 | grep 'inet ' | cut -d t -f 2 | cut -d / -f 1 | tr -d ' ')/phpmyadmin"
-    echo "Administratoruser: admin"
-    echo "Administratorpass: passw0rd"
-    echo "Beispieluser: example_user"
-    echo "Beispieluser: passw0rd"
+    cd jupyter-rolle/
+    ansible-galaxy role install --force --roles-path ./roles --role-file requirements.yml
   SHELL
 end

@@ -2,4 +2,10 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - jupyter
+    - role: jupyter
+      become: yes
+      # ToDo Now for all boxes not only for ina
+      jupyter_ijavascript: false
+      jupyter_RISE: false
+      jupyter_sos: false
+      jupyter_nbextensions_todo: false

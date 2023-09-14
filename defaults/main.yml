@@ -7,6 +7,11 @@ jupyter_iruby: False
 jupyter_c_kernel: False
 jupyter_ijavascript: False
 jupyter_imongo: False
+# ToDo Now for all boxes not only for ina
+jupyter_ijavascript: false
+jupyter_RISE: false
+jupyter_sos: false
+jupyter_nbextensions_todo: false
 
 jupyter_dependencies_packages:
   - python3-pip

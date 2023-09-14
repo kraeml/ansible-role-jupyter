@@ -276,12 +276,12 @@
     - jupyter_not_base
   when: jupyter_imongo
 
-- name: Get nbextensions
-  command: jupyter nbextension list
-  register: jupyter_nbextensions
-  changed_when: False
-  tags:
-    - jupyter_base
+#- name: Get nbextensions
+#  command: jupyter nbextension list
+#  register: jupyter_nbextensions
+#  changed_when: False
+#  tags:
+#    - jupyter_base
 
 - block:
   - name: Ensure RISE installed
@@ -317,6 +317,7 @@
     - rise
     - jupyter_base
     - todo
+  when: jupyter_RISE
 
 - name: Enable sos
   become: yes
@@ -325,6 +326,7 @@
     - transient-display-data
     - jupyterlab-sos
     - "@ijmbarr/jupyterlab_spellchecker"
+  when: jupyter_sos
 
 - name: Display nbextension
   debug:
@@ -368,12 +370,13 @@
   tags:
     - jupyter_base
     - todo
+  when: jupyter_nbextensions_todo
 
 - name: Enable nbextensions
   become: yes
   become_user: "{{ansible_user_id}}"
   command: jupyter nbextensions_configurator enable --user
-  when: nbextension_install.changed
+  when: nbextension_install.changed and jupyter_nbextensions_todo
   tags:
     - jupyter_base
     - todo
@@ -384,7 +387,9 @@
   changed_when: False
   tags:
     - jupyter_base
-     todo
+    - todo
+  when: jupyter_nbextensions_todo
+
 - name: Display nbextension
   debug:
       var: jupyter_nbextensions
@@ -400,6 +405,7 @@
   tags:
     - jupyter_base
     - todo
+  when: jupyter_nbextensions_todo
 
 - name: Ensure some nbextensions are activated
   become: yes
@@ -424,6 +430,7 @@
   tags:
     - jupyter_base
     - todo
+  when: jupyter_nbextensions_todo
 
 - name: Ensure de_DE dict for spellchecker is installed
   become: yes
@@ -436,6 +443,7 @@
   tags:
     - jupyter_base
     - todo
+  when: jupyter_nbextensions_todo
 
 #- name: Enable ipyleaflet
 #  become: yes
